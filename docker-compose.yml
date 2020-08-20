@@ -1,11 +1,11 @@
 version: '3'
 services:
-    ganache:
-        image: '0xorg/ganache-cli:istanbul'
-        ports:
-            - '8545:8545'
-        environment:
-            VERSION: 6.4.1
+    # ganache:
+    #     image: '0xorg/ganache-cli:istanbul'
+    #     ports:
+    #         - '8545:8545'
+    #     environment:
+    #         VERSION: 6.4.1
     postgres:
         image: postgres:9.6
         environment:
@@ -20,8 +20,8 @@ services:
             - '5432:5432'
     mesh:
         image: 0xorg/mesh:9.3.0
-        depends_on:
-            - ganache
+        # depends_on:
+        #     - ganache
         restart: on-failure
         environment:
             ETHEREUM_RPC_URL: '${ETHEREUM_RPC_URL}'
@@ -40,8 +40,8 @@ services:
             - '60557:60557'
             - '60558:60558'
             - '60559:60559'
-        command: |
-            sh -c "waitForGanache () { until printf 'POST /\r\nContent-Length: 26\r\n\r\n{\"method\":\"net_listening\"}' | nc localhost 8545 | grep true; do continue; done }; waitForGanache && ./mesh"
+        # command: |
+        #     sh -c "waitForGanache () { until printf 'POST /\r\nContent-Length: 26\r\n\r\n{\"method\":\"net_listening\"}' | nc localhost 8545 | grep true; do continue; done }; waitForGanache && ./mesh"
     events-pipeline:
         depends_on:
             - postgres
